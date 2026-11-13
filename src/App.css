@@ -31,11 +31,15 @@ button {
   font: inherit;
 }
 
+/* =================================
+   DESKTOP OVERLAY
+================================= */
+
 .desktop-overlay {
   position: relative;
   width: 100%;
   height: 100%;
-  display: block;
+  overflow: hidden;
   background: transparent;
 }
 
@@ -44,21 +48,19 @@ button {
   top: 0;
   left: 50%;
   transform: translateX(-50%);
-}
 
-.island {
   width: 230px;
   height: 43px;
   overflow: hidden;
+
   color: white;
   background: #000;
-  border: 1px solid rgba(255,255,255,.08);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-top: 0;
   border-radius: 0 0 22px 22px;
 
   transition:
-    width 400ms cubic-bezier(.22,1,.36,1),
-    height 400ms cubic-bezier(.22,1,.36,1),
+    width 400ms cubic-bezier(.22, 1, .36, 1),
     border-radius 400ms ease;
 }
 
@@ -69,9 +71,15 @@ button {
 
 .island.expanded {
   width: 420px;
-  height: 610px;
+  height: 100%;
+  max-height: 100%;
+  min-height: 43px;
+
   border-radius: 0 0 25px 25px;
+
   overflow-y: auto;
+  overflow-x: hidden;
+
   scrollbar-width: none;
 }
 
@@ -79,13 +87,19 @@ button {
   display: none;
 }
 
+/* =================================
+   HEADER
+================================= */
+
 .island-header {
   height: 43px;
   min-height: 43px;
   padding: 0 17px;
+
   display: flex;
   align-items: center;
   justify-content: space-between;
+
   cursor: grab;
 }
 
@@ -95,21 +109,29 @@ button {
 
 .header-content {
   height: 100%;
+  min-width: 0;
+
   display: flex;
   align-items: center;
   gap: 9px;
+
   flex: 1;
 }
 
 .activity-symbol {
   color: #fff;
   font-size: 15px;
+  flex-shrink: 0;
 }
 
 .activity-name {
   color: #f5f5f5;
   font-size: 12px;
   font-weight: 600;
+
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .activity-time {
@@ -117,16 +139,27 @@ button {
   color: #bdbdbd;
   font-size: 11px;
   font-variant-numeric: tabular-nums;
+  flex-shrink: 0;
+}
+
+.header-controls {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-shrink: 0;
 }
 
 .expand-control {
   width: 25px;
   height: 25px;
+
   display: grid;
   place-items: center;
+
   padding: 0;
   border: 0;
   border-radius: 50%;
+
   background: transparent;
   cursor: pointer;
 }
@@ -138,8 +171,10 @@ button {
 .chevron {
   width: 7px;
   height: 7px;
+
   border-right: 1.5px solid #aaa;
   border-bottom: 1.5px solid #aaa;
+
   transition: transform 300ms ease;
 }
 
@@ -151,11 +186,18 @@ button {
   transform: rotate(225deg) translateY(-2px);
 }
 
+/* =================================
+   ACTIVITY PANEL
+================================= */
+
 .activity-panel {
+  min-height: 0;
   padding: 12px 20px 14px;
+
   opacity: 0;
   transform: translateY(-6px);
   pointer-events: none;
+
   transition:
     opacity 180ms ease,
     transform 250ms ease;
@@ -168,10 +210,15 @@ button {
   transition-delay: 100ms;
 }
 
+/* =================================
+   POMODORO
+================================= */
+
 .mode-selector {
   display: flex;
   align-items: center;
   gap: 5px;
+
   padding: 3px;
   background: #151515;
   border-radius: 9px;
@@ -181,14 +228,19 @@ button {
   flex: 1;
   height: 25px;
   padding: 0 5px;
+
   color: #858585;
   background: transparent;
   border: 0;
   border-radius: 7px;
+
   font-size: 9px;
   cursor: pointer;
   white-space: nowrap;
-  transition: background 180ms ease, color 180ms ease;
+
+  transition:
+    background 180ms ease,
+    color 180ms ease;
 }
 
 .mode-button:hover {
@@ -213,10 +265,12 @@ button {
 
 .timer-value {
   margin-top: 2px;
+
   font-size: 34px;
   line-height: 1.15;
   font-weight: 500;
   letter-spacing: -1.5px;
+
   font-variant-numeric: tabular-nums;
 }
 
@@ -224,6 +278,7 @@ button {
   width: 100%;
   height: 2px;
   margin-top: 9px;
+
   overflow: hidden;
   background: #292929;
   border-radius: 2px;
@@ -238,6 +293,7 @@ button {
 
 .timer-footer {
   margin-top: 11px;
+
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -258,13 +314,16 @@ button {
   min-width: 62px;
   height: 27px;
   padding: 0 13px;
+
   color: #000;
   background: #fff;
   border: 0;
   border-radius: 15px;
+
   font-size: 10px;
   font-weight: 650;
   cursor: pointer;
+
   transition: background 150ms ease;
 }
 
@@ -275,13 +334,16 @@ button {
 .reset-control {
   width: 27px;
   height: 27px;
+
   display: grid;
   place-items: center;
+
   padding: 0;
   color: #c2c2c2;
   background: #242424;
   border: 0;
   border-radius: 50%;
+
   font-size: 17px;
   cursor: pointer;
 }
@@ -290,23 +352,19 @@ button {
   background: #383838;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    transition-duration: 0.01ms !important;
-  }
-}
-
-
+/* =================================
+   MEDIA PLAYER
+================================= */
 
 .media-panel {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
+
   padding: 12px;
   margin-bottom: 14px;
+
   border-radius: 14px;
   background: rgba(255, 255, 255, 0.055);
 }
@@ -315,6 +373,7 @@ button {
   display: flex;
   align-items: center;
   gap: 10px;
+
   min-width: 0;
   flex: 1;
 }
@@ -323,10 +382,13 @@ button {
   width: 42px;
   height: 42px;
   flex-shrink: 0;
+
   display: grid;
   place-items: center;
+
   border-radius: 9px;
   background: linear-gradient(135deg, #343434, #111);
+
   color: white;
   font-size: 22px;
 }
@@ -366,6 +428,7 @@ button {
   border: none;
   background: transparent;
   color: white;
+
   cursor: pointer;
   font-size: 16px;
   padding: 5px;
@@ -375,15 +438,21 @@ button {
   color: #aaa;
 }
 
+.media-controls button:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
 
 .media-source-select {
   width: 100%;
   margin-bottom: 8px;
   padding: 6px 9px;
+
   color: #aaa;
   background: #151515;
   border: 1px solid #292929;
   border-radius: 8px;
+
   font-size: 10px;
   outline: none;
 }
@@ -393,10 +462,9 @@ button {
   color: white;
 }
 
-.media-controls button:disabled {
-  opacity: 0.3;
-  cursor: not-allowed;
-}
+/* =================================
+   MORE ACTIVITIES
+================================= */
 
 .more-activities {
   margin-top: 18px;
@@ -405,13 +473,17 @@ button {
 
 .more-activities-toggle {
   width: 100%;
+
   display: flex;
   justify-content: space-between;
   align-items: center;
+
   padding: 13px 0;
+
   color: #aaa;
   background: transparent;
   border: 0;
+
   font-size: 11px;
   cursor: pointer;
   text-transform: uppercase;
@@ -425,17 +497,18 @@ button {
 .activities-placeholder {
   padding: 15px;
   margin-bottom: 12px;
+
   border-radius: 10px;
   background: #151515;
+
   color: #777;
   font-size: 11px;
   text-align: center;
 }
 
-
-/* ================================
+/* =================================
    ISLANDX UTILITIES
-================================ */
+================================= */
 
 .utilities-panel {
   padding: 18px 20px 22px;
@@ -471,6 +544,7 @@ button {
   gap: 6px;
   margin-bottom: 16px;
   padding: 4px;
+
   border-radius: 9px;
   background: rgba(255, 255, 255, 0.045);
 }
@@ -478,10 +552,13 @@ button {
 .utilities-tabs button {
   flex: 1;
   padding: 8px 5px;
+
   border: 0;
   border-radius: 6px;
+
   color: #9999a2;
   background: transparent;
+
   font-size: 11px;
   cursor: pointer;
 }
@@ -502,9 +579,12 @@ button {
 .notes-footer button {
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 7px;
+
   padding: 8px 11px;
+
   color: #dedee4;
   background: rgba(255, 255, 255, 0.06);
+
   font-size: 11px;
   cursor: pointer;
 }
@@ -521,7 +601,9 @@ button {
   border-color: #48484f;
 }
 
-/* Calculator */
+/* =================================
+   CALCULATOR
+================================= */
 
 .calculator-display {
   padding: 13px;
@@ -533,16 +615,20 @@ button {
   width: 100%;
   border: 0;
   outline: 0;
+
   color: #fff;
   background: transparent;
+
   font-size: 17px;
 }
 
 .calculator-result {
   margin-top: 10px;
+
   color: #a9a9b2;
   font-size: 13px;
   text-align: right;
+
   overflow-wrap: anywhere;
 }
 
@@ -556,7 +642,9 @@ button {
   min-height: 34px;
 }
 
-/* Clipboard */
+/* =================================
+   CLIPBOARD
+================================= */
 
 .utility-toolbar {
   gap: 10px;
@@ -566,6 +654,7 @@ button {
   display: flex;
   flex-direction: column;
   gap: 7px;
+
   max-height: 230px;
   overflow-y: auto;
 }
@@ -574,16 +663,20 @@ button {
   display: flex;
   align-items: center;
   gap: 8px;
+
   padding: 9px;
   border-radius: 8px;
+
   background: rgba(255, 255, 255, 0.045);
 }
 
 .clipboard-item span {
   flex: 1;
   min-width: 0;
+
   color: #c8c8d0;
   font-size: 11px;
+
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -600,6 +693,7 @@ button {
 
 .utility-empty {
   padding: 22px 10px;
+
   color: #85858d;
   font-size: 12px;
   text-align: center;
@@ -609,18 +703,24 @@ button {
   align-self: flex-end;
 }
 
-/* Notes */
+/* =================================
+   QUICK NOTES
+================================= */
 
 .quick-notes-input {
   width: 100%;
   min-height: 180px;
   resize: vertical;
+
   padding: 12px;
+
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 9px;
   outline: none;
+
   color: #eee;
   background: rgba(255, 255, 255, 0.045);
+
   font-family: inherit;
   font-size: 12px;
   line-height: 1.6;
@@ -634,7 +734,9 @@ button {
   padding: 6px 10px;
 }
 
-/* System Monitor */
+/* =================================
+   SYSTEM MONITOR
+================================= */
 
 .system-metric {
   padding: 12px;
@@ -644,6 +746,7 @@ button {
 
 .system-metric-heading {
   margin-bottom: 10px;
+
   color: #e5e5e9;
   font-size: 12px;
 }
@@ -651,14 +754,17 @@ button {
 .system-track {
   width: 100%;
   height: 5px;
+
   overflow: hidden;
   border-radius: 10px;
+
   background: rgba(255, 255, 255, 0.1);
 }
 
 .system-fill {
   height: 100%;
   border-radius: inherit;
+
   background: #b8b8c0;
   transition: width 0.4s ease;
 }
@@ -668,8 +774,10 @@ button {
   align-items: center;
   justify-content: space-between;
   gap: 10px;
+
   padding: 13px;
   border-radius: 9px;
+
   background: rgba(255, 255, 255, 0.045);
   color: #cfcfd5;
   font-size: 12px;
@@ -678,4 +786,207 @@ button {
 .battery-card strong {
   color: #fff;
   font-size: 14px;
+}
+
+/* =================================
+   ISLANDX CUSTOMIZATION
+================================= */
+
+.settings-control {
+  width: 27px;
+  height: 27px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: none;
+  border-radius: 50%;
+
+  color: #a5a5ae;
+  background: transparent;
+
+  font-size: 15px;
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+.settings-control:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.widget-settings {
+  margin-top: 14px;
+  padding: 16px;
+
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 12px;
+
+  background: rgba(255, 255, 255, 0.035);
+}
+
+.widget-settings-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+
+  margin-bottom: 16px;
+}
+
+.widget-settings-header h3 {
+  margin: 0;
+
+  color: #f5f5f7;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.widget-settings-header p {
+  margin: 5px 0 0;
+
+  color: #888891;
+  font-size: 11px;
+}
+
+.settings-close {
+  width: 25px;
+  height: 25px;
+
+  border: none;
+  border-radius: 6px;
+
+  color: #9999a2;
+  background: transparent;
+
+  font-size: 19px;
+  cursor: pointer;
+}
+
+.settings-close:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.widget-settings-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.widget-setting-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+
+  padding: 13px 0;
+
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.widget-setting-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.widget-setting-info span {
+  color: #e9e9ed;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.widget-setting-info small {
+  color: #85858e;
+  font-size: 10px;
+}
+
+.widget-switch {
+  position: relative;
+  flex-shrink: 0;
+
+  width: 36px;
+  height: 20px;
+  padding: 2px;
+
+  border: none;
+  border-radius: 20px;
+
+  background: #414149;
+  cursor: pointer;
+
+  transition: background 0.2s ease;
+}
+
+.widget-switch span {
+  display: block;
+
+  width: 16px;
+  height: 16px;
+
+  border-radius: 50%;
+  background: #fff;
+
+  transition: transform 0.2s ease;
+}
+
+.widget-switch.enabled {
+  background: #e5e5e9;
+}
+
+.widget-switch.enabled span {
+  transform: translateX(16px);
+  background: #17171a;
+}
+
+.widget-settings-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-top: 16px;
+}
+
+.widget-settings-footer button {
+  padding: 8px 11px;
+
+  border: none;
+  border-radius: 7px;
+
+  color: #aaaab3;
+  background: transparent;
+
+  font-size: 11px;
+  cursor: pointer;
+}
+
+.widget-settings-footer button:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+}
+
+.widget-settings-footer .settings-done {
+  color: #17171a;
+  background: #ededf0;
+  font-weight: 600;
+}
+
+.widget-settings-footer .settings-done:hover {
+  background: #fff;
+  color: #17171a;
+}
+
+/* =================================
+   ACCESSIBILITY
+================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+  }
 }
